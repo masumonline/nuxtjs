@@ -26,16 +26,16 @@
         <div class="container px-5 py-10 mx-auto">
           <div class="flex flex-wrap -mx-4 -mb-10 text-center">
             <div
-              class="sm:w-1/2 mb-10 px-4"
+              class="xl:w-1/4 lg:w-1/4 md:w-1/2 sm:w-1/2 mb-10 px-4"
               v-for="movie in movies"
               :key="movie.id"
             >
-              <div class="rounded-lg overflow-hidden">
+              <div class="rounded-lg h-auto overflow-hidden">
                 <img
                   alt="content"
-                  class="object-cover object-center h-full w-full loadimg"
+                  class="object-cover object-center h-auto w-auto loadimg inline"
                   v-bind:src="
-                    'https://image.tmdb.org/t/p/w780/' + movie.poster_path
+                    'https://image.tmdb.org/t/p/w185/' + movie.poster_path
                   "
                 />
               </div>
@@ -49,7 +49,7 @@
               </h3>
               <p>Popularity: {{ movie.popularity }}</p>
               <p class="leading-relaxed text-base">
-                {{ movie.overview.substring(0, 150) + "..." }}
+                {{ movie.overview.substring(0, 100) + "..." }}
               </p>
               <button
                 class="flex mx-auto mt-6 text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none hover:bg-indigo-600 rounded"

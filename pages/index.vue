@@ -20,6 +20,7 @@
           </h1>
           <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
             Movie List From themoviedb.org
+            <span v-if="!movies.length">Loading...</span>
           </p>
         </div>
         <div class="container px-5 py-10 mx-auto">
@@ -87,7 +88,7 @@ const httptwo = axios.create({
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZDU5MzY4MGE1YmE1Y2JmNzZjZDQ2NTgyOWRiMmY0YyIsInN1YiI6IjVmZTcwNWNmMTYwZTczMDAzY2FlZDM4YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.9oSBfZ2J_E58_r7_5BouNO0b2a_ke33ScZADIp8utRM",
   },
   adapter: throttleAdapterEnhancer(axios.defaults.adapter, {
-    threshold: 2 * 1000,
+    threshold: 10 * 1000,
   }),
 });
 
@@ -121,7 +122,6 @@ export default {
         "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc"
       );
       this.movies = res.data.results;
-      console.log(res.data.results);
     } catch (error) {
       console.log(error);
     }

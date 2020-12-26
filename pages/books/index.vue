@@ -1,6 +1,12 @@
 <template>
   <div>
     <section class="text-gray-700 body-font">
+      <h1
+        class="text-center text-2xl font-medium title-font mb-4 text-gray-900 tracking-widest"
+        v-if="!books.length"
+      >
+        Loading ...
+      </h1>
       <div class="container px-5 py-24 mx-auto">
         <div class="flex flex-wrap -m-4">
           <div class="p-4 md:w-1/3" v-for="book in books" :key="book.id">

@@ -40,6 +40,9 @@
           <nuxt-link to="/bad" class="mr-5 hover:text-gray-900">
             Braking Bad
           </nuxt-link>
+          <nuxt-link to="/jokes" class="mr-5 hover:text-gray-900">
+            Jokes
+          </nuxt-link>
         </nav>
       </div>
     </header>

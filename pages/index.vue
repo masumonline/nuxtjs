@@ -2,6 +2,10 @@
   <div class="container">
     <div>
       <section class="text-gray-700 body-font">
+        <h3 class="text-center">BAD JOKE DAD JOKE</h3>
+        <p class="text-center">
+          {{ joke }}
+        </p>
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-wrap -m-4">
             <div class="p-4 md:w-1/3">
@@ -9,7 +13,7 @@
                 class="h-full border-2 border-gray-200 rounded-lg overflow-hidden"
               >
                 <img
-                  class="lg:h-48 md:h-36 w-full object-cover object-center"
+                  class="lg:h-48 md:h-36 w-full object-cover object-center loadimg"
                   src="https://dummyimage.com/720x400"
                   alt="blog"
                 />
@@ -87,7 +91,7 @@
                 class="h-full border-2 border-gray-200 rounded-lg overflow-hidden"
               >
                 <img
-                  class="lg:h-48 md:h-36 w-full object-cover object-center"
+                  class="lg:h-48 md:h-36 w-full object-cover object-center loadimg"
                   src="https://dummyimage.com/721x401"
                   alt="blog"
                 />
@@ -165,7 +169,7 @@
                 class="h-full border-2 border-gray-200 rounded-lg overflow-hidden"
               >
                 <img
-                  class="lg:h-48 md:h-36 w-full object-cover object-center"
+                  class="lg:h-48 md:h-36 w-full object-cover object-center loadimg"
                   src="https://dummyimage.com/722x402"
                   alt="blog"
                 />
@@ -246,11 +250,43 @@
 </template>
 
 <script>
+import axios from "axios";
+import {
+  cacheAdapterEnhancer,
+  throttleAdapterEnhancer,
+} from "axios-extensions";
+
+const http = axios.create({
+  baseURL: "https://icanhazdadjoke.com/",
+  headers: { Accept: "application/json" },
+  adapter: throttleAdapterEnhancer(axios.defaults.adapter, {
+    threshold: 2 * 1000,
+  }),
+});
+
 export default {
   head() {
     return {
       title: "Nuxt JS Home Page",
     };
+  },
+
+  data() {
+    return {
+      joke: "Loading...",
+    };
+  },
+
+  async created() {
+    try {
+      let res = await http.get("https://icanhazdadjoke.com/");
+      this.joke = res.data.joke;
+      setTimeout(() => {
+        http.get("https://icanhazdadjoke.com/"); // after 2s, the real request makes again
+      }, 2 * 1000);
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>

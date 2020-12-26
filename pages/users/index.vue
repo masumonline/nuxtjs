@@ -8,7 +8,7 @@
               class="h-full border-2 border-gray-200 rounded-lg overflow-hidden"
             >
               <img
-                class="lg:h-48 md:h-36 w-full object-cover object-center"
+                class="lg:h-48 md:h-36 w-full object-cover object-center loadimg"
                 v-bind:src="user.photo"
                 alt="User"
               />
@@ -35,6 +35,18 @@
 
 <script>
 import axios from "axios";
+import {
+  cacheAdapterEnhancer,
+  throttleAdapterEnhancer,
+} from "axios-extensions";
+
+const http = axios.create({
+  baseURL: "https://api.bddevwork.net/user",
+  headers: { Accept: "application/json" },
+  adapter: throttleAdapterEnhancer(
+    cacheAdapterEnhancer(axios.defaults.adapter)
+  ),
+});
 
 export default {
   head() {
@@ -50,14 +62,8 @@ export default {
   },
 
   async created() {
-    const config = {
-      headers: {
-        Accept: "application/json",
-      },
-    };
-
     try {
-      const res = await axios.get("https://api.bddevwork.net/user", config);
+      const res = await http.get("https://api.bddevwork.net/user");
       this.users = res.data.data;
     } catch (error) {
       console.log(error);

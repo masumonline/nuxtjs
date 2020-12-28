@@ -34,9 +34,7 @@
                 <img
                   alt="content"
                   class="object-cover object-center h-auto w-auto loadimg inline"
-                  v-bind:src="
-                    'https://image.tmdb.org/t/p/w185/' + movie.poster_path
-                  "
+                  :src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path"
                 />
               </div>
               <h2
@@ -51,11 +49,12 @@
               <p class="leading-relaxed text-base">
                 {{ movie.overview.substring(0, 100) + "..." }}
               </p>
-              <button
-                class="flex mx-auto mt-6 text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none hover:bg-indigo-600 rounded"
+              <nuxt-link
+                :to="'/movie/' + movie.id"
+                class="inline-flex w-auto mt-6 text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none hover:bg-indigo-600 rounded"
               >
                 Read More
-              </button>
+              </nuxt-link>
             </div>
           </div>
         </div>
@@ -122,6 +121,7 @@ export default {
         "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc"
       );
       this.movies = res.data.results;
+      console.log(res.data.results[0]);
     } catch (error) {
       console.log(error);
     }
